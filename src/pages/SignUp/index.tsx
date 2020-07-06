@@ -9,13 +9,15 @@ import { Container, Content, Background } from './styles';
 import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import getValidationErrors from '../../ultils/getValidationErrors';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const handleSubmit = useCallback(async (data: object) => {
     try {
+      formRef.current?.setErrors({});
       const schema = Yup.object().shape({
-        name: Yup.string().required('Nome Obrigatório'),
+        user: Yup.string().required('Nome Obrigatório'),
         email: Yup.string().required('Email Obrigatório').email('Formato de Email inválido'),
         password: Yup.string().min(6, 'A senha deve conter no mínimo 6 characteres'),
       });
@@ -24,7 +26,8 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
     } catch (error) {
-      console.log(error);
+      const errors = getValidationErrors(error);
+      formRef.current?.setErrors(errors);
     }
   }, []);
 
