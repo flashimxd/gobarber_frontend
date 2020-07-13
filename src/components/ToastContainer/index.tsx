@@ -1,20 +1,30 @@
 import React from 'react';
-import { FiXCircle, FiAlertCircle } from 'react-icons/fi';
-import { Container, Toast } from './styles';
+import { useTransition } from 'react-spring';
+import Toast from './Toast';
+import { Container } from './styles';
+import { ToastMessage } from '../../hooks/toast';
 
-const ToastContainer: React.FC = () => (
-  <Container>
-    <Toast hasDescription>
-      <FiAlertCircle size={20} />
-      <div>
-        <strong>Aconteceu um erro</strong>
-        <p>Cruzeiro esta na série A</p>
-      </div>
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-  </Container>
-);
+interface ToastContainerProps {
+  messages: ToastMessage[]
+}
 
+const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+  const messagesWithTransition = useTransition(
+    messages,
+    (message) => message.id,
+    {
+      from: { right: '-120%' },
+      enter: { right: '0%' },
+      leave: { right: '-120%' },
+    },
+  );
+
+  return (
+    <Container>
+      {messagesWithTransition.map(({ item, key, props }) => (
+        <Toast style={props} key={key} message={item} />
+      ))}
+    </Container>
+  );
+};
 export default ToastContainer;
