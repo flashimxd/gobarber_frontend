@@ -13,6 +13,7 @@ export const Content = styled.div`
   flex-direction: column;
   place-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 700px;
 `;

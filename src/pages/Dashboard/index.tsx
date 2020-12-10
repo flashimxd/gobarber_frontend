@@ -8,6 +8,7 @@ import 'react-day-picker/lib/style.css';
 
 import { FiClock, FiPower } from 'react-icons/fi';
 import { parseISO } from 'date-fns/esm';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -118,8 +119,10 @@ const DashBoard: React.FC = () => {
           <Profile>
             <img src={avatar_url} alt={name} />
             <div>
-              <span>Bem-vindo,</span>
-              <strong>{name}</strong>
+              <span>Bem-vindo</span>
+              <Link to="/profile">
+                <strong>{name}</strong>
+              </Link>
             </div>
           </Profile>
           <button type="button" onClick={signOut}>
