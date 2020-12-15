@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, wait } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import SignIn from '../../pages/SignIn'
 
 const mockedHistoryPush = jest.fn();
@@ -33,8 +33,10 @@ describe('SignIn Page', () => {
     fireEvent.change(passwordField, { target: { value: '1234' }})
     fireEvent.click(buttonElement)
 
-
-    await wait(() => expect(mockedHistoryPush).toBeCalledWith('/dashboard'));
+    await waitFor( () => {
+      expect(mockedHistoryPush).toBeCalledWith('/dashboard')
+    } )
+    // await wait(() => expect(mockedHistoryPush).toBeCalledWith('/dashboard'));
 
   })
 })
